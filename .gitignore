@@ -1,0 +1,13 @@
+# gitignore for node.js projects
+# Created by https://www.gitignore.io/api/node
+
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# node_modules
+node_modules/
