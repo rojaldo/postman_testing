@@ -209,7 +209,7 @@ router.post('/items', (req, res) => {
     // create item
     let id = 0
     if (items.length > 0) id = items[items.length - 1].id + 1;
-    const item = new Item(req.body.name, id);
+    const item = new Item(req.body.book_id, id);
     items.push(item);
     // return response with 201 status code and item
     res.status(201).json(item);
