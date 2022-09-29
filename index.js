@@ -15,6 +15,12 @@ const Book = require('./models/book');
 // Import the User model
 const User = require('./models/user');
 
+// Import the Transaction model
+const Transaction = require('./models/transaction');
+
+// Import the Item model
+const Item = require('./models/item');
+
 //List of books
 let books = [];
 
@@ -209,9 +215,11 @@ router.post('/items', (req, res) => {
     // create item
     let id = 0
     if (items.length > 0) id = items[items.length - 1].id + 1;
+    console.log(req.body);
+    // get body as json
     const item = new Item(req.body.book_id, id);
     items.push(item);
-    // return response with 201 status code and item
+    // return response with status 201
     res.status(201).json(item);
 });
 
@@ -243,7 +251,7 @@ router.post('/transactions', (req, res) => {
     let id = 0
     if (transactions.length > 0) id = transactions[transactions.length - 1].id + 1;
     // create transaction with currentDate and dueDate 7 days later
-    const transaction = new Transaction(req.body.user_id, req.body.item_id, id, new Date(), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000));
+    const transaction = new Transaction(req.body.user_id, req.body.item_id, new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(), id);
     transactions.push(transaction);
     // return response with 201 status code and transaction
     res.status(201).json(transaction);
