@@ -39,6 +39,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error500'
+    # put method with id path parameter
+    post:
+      summary: Create a book
+      description: Create a book
+      operationId: createBook
+      tags:
+        - books
+      requestBody:
+        description: Book to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookContent'
+      responses:
+        '201':
+          description: Book added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+
+  /books/{id}:
     put:
       summary: Modify a book
       description: Modify all the info of a book in the library by id
@@ -53,7 +88,7 @@ paths:
           schema:
             type: integer
             format: int64
-          example: 1
+            example: 1
       requestBody:
         description: Book to modify
         required: true
@@ -100,6 +135,7 @@ paths:
           schema:
             type: integer
             format: int64
+            example: 1
       requestBody:
         description: Book to modify
         required: true
@@ -132,38 +168,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error500'
-    post:
-      summary: Create a book
-      description: Create a book
-      operationId: createBook
-      tags:
-        - books
-      requestBody:
-        description: Book to create
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BookContent'
-      responses:
-        '201':
-          description: Book added
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error400'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error500'
     delete:
       summary: Delete a book
       description: Delete a book by id
@@ -178,6 +182,7 @@ paths:
           schema:
             type: integer
             format: int64
+            example: 1
       responses:
         '200':
           description: Book deleted successfully
