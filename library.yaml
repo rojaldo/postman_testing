@@ -263,3 +263,5 @@ components:
         message:
           type: string
           example: Book not found. Wrong id provided in the path request
+
+
