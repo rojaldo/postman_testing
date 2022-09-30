@@ -53,6 +53,7 @@ paths:
           schema:
             type: integer
             format: int64
+          example: 1
       requestBody:
         description: Book to modify
         required: true
@@ -88,7 +89,7 @@ paths:
     patch:
       summary: Modify a book
       description: Modify some info of a book in the library by id
-      operationId: updateBook
+      operationId: updatePartialBook
       tags:
         - books
       parameters:
@@ -151,6 +152,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
         '500':
           description: Internal Server Error
           content:
