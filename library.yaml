@@ -1,5 +1,5 @@
-# open api 3.10 spec
-openapi: 3.0.0
+# open api 3.1.0 spec
+openapi: 3.0.2
 info:
   title: Library API
   version: 1.0.0
@@ -24,7 +24,7 @@ paths:
         - books
       responses:
         '200':
-          description: OK
+          description: returns all books in the library
           content:
             application/json:
               schema:
@@ -36,7 +36,80 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error500'
+    put:
+      summary: Modify a book
+      description: Modify all the info of a book in the library by id
+      operationId: updateBook
+      tags:
+        - books
+      parameters:
+        - name: id
+          in: path
+          description: id of the book to modify
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Book to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookContent'
+      responses:
+        '200':
+          description: Book modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorId'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+    post:
+      summary: Create a book
+      description: Create a book
+      operationId: createBook
+      tags:
+        - books
+      requestBody:
+        description: Book to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+
 components:
   schemas:
     Book:
@@ -45,14 +118,50 @@ components:
         id:
           type: integer
           format: int64
+          example: 1
         title:
           type: string
-    Error:
+          example: The Lord of the Rings
+        author:
+          type: string
+          example: J.R.R. Tolkien
+    BookContent:
+      type: object
+      properties:
+        title:
+          type: string
+          example: The Lord of the Rings
+        author:
+          type: string
+          example: J.R.R. Tolkien
+    Error500:
       type: object
       properties:
         code:
           type: integer
           format: int32
+          example: 500
         message:
           type: string
+          example: Internal Server Error, please notify the administrator
+    Error400:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 400
+        message:
+          type: string
+          example: Bad Request, please check the request body
+    ErrorId:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 404
+        message:
+          type: string
+          example: Book not found. Wrong id provided in the path request
 
