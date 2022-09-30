@@ -176,8 +176,8 @@ router.put('/users/:user_id', (req, res) => {
 });
 
 router.patch('/users/:user_id', (req, res) => {
-    // return 405
-    res.status(405).json({ message: 'Method not allowed!' });
+    // return not implemented response
+    res.status(501).json({ message: 'Not implemented!' });
 });
 
 // delete user if basic authentication is successful
